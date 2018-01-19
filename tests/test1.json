@@ -1,0 +1,86 @@
+[
+  {
+    "question": "На сколько единиц надо увеличить 7, чтобы получить 11?",
+    "answer": [
+      {
+        "variant": "на 3",
+        "result": false
+      },
+      {
+        "variant": "на 4",
+        "result": true
+      },
+      {
+        "variant": "на 2",
+        "result": false
+      },
+      {
+        "variant": "на 5",
+        "result": false
+      }
+    ]
+  },
+  {
+    "question": "Укажи наибольшее двузначное число, которое записано двумя разными цифрами:",
+    "answer": [
+      {
+        "variant": 99,
+        "result": false
+      },
+      {
+        "variant": 98,
+        "result": true
+      },
+      {
+        "variant": 87,
+        "result": false
+      },
+      {
+        "variant": 91,
+        "result": false
+      }
+    ]
+  },
+  {
+    "question": "Чему равно значение суммы 40 и 10?",
+    "answer": [
+      {
+        "variant": "50",
+        "result": true
+      },
+      {
+        "variant": "60",
+        "result": false
+      },
+      {
+        "variant": "70",
+        "result": false
+      },
+      {
+        "variant": "80",
+        "result": false
+      }
+    ]
+  },
+  {
+    "question": "Какой состав у числа 67?",
+    "answer": [
+      {
+        "variant": "7 дес. 6 ед.",
+        "result": false
+      },
+      {
+        "variant": "6 дес. 7ед.",
+        "result": true
+      },
+      {
+        "variant": "6+7",
+        "result": false
+      },
+      {
+        "variant": "6-7",
+        "result": false
+      }
+    ]
+  }
+]
