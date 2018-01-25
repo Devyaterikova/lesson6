@@ -1,5 +1,5 @@
 <?php
-$file_list = glob('tests/*.json');
+$file_list = glob('uploads/*.json');
 $file_send = false;
 if (isset($_FILES['test']['name']) && !empty($_FILES['test']['name']))
 {
@@ -7,12 +7,13 @@ if (isset($_FILES['test']['name']) && !empty($_FILES['test']['name']))
     {
         echo '<pre>';
         $file_user = basename($file);
-        if ($_FILES['test']['name'] == $file_user){
-            echo "Файл с таким именем существует";
-            echo "<p><a href=\"list.php\">Выбрать тест</a></p>";
-            exit;
-        }
+     if ($_FILES['test']['name'] == $file_user){
+        header('Refresh: 3;');
+        echo "Файл с таким именем существует";
+        exit;
     }
+}
+
     $i = explode(".", $_FILES['test']['name']);
     if (end($i) == "json")
     {
@@ -21,25 +22,25 @@ if (isset($_FILES['test']['name']) && !empty($_FILES['test']['name']))
         $decode_tmp = json_decode($file_get_tmp, true);
         foreach ($decode_tmp as $test_tmp)
         {
-            if (isset($test_tmp['question']) && isset($test_tmp['answer']))
+            if (isset($test_tmp['question']) && isset($test_tmp['answers']))
             {
-                for($i=0; $i<count($test_tmp['answer']); $i++)
+                for($i=0; $i<count($test_tmp['answers']); $i++)
                 {
-                    if((isset($test_tmp['answer'][$i]['variant']) && isset($test_tmp['answer'][$i]['result'])) == false)
+                    if((isset($test_tmp['answers'][$i]['answer']) && isset($test_tmp['answers'][$i]['result'])) == false)
                     {
-                        header('Refresh: 2;');
-                        echo "Повторите еще раз.";
+                        header('Refresh: 3;');
+                        echo "Ошибка, загрузите еще раз файл.";
                         unlink($file_tmp);
-                        echo "<p><a href=\"admin.php\">Загрузить тест</a></p>";
-                        echo "<p><a href=\"list.php\">Выбрать тест</a></p>";
+                        echo "<p><a href=\"admin.php\">Загрузка теста</a></p>";
+                        echo "<p><a href=\"list.php\">Выбор теста</a></p>";
                         exit;
                     }
                 }
             }
             else
             {
-                header('Refresh: 2;');
-                echo "Повторите еще раз.";
+                header('Refresh: 3;');
+                echo "Ошибка, загрузите еще раз файл.";
                 unlink($file_tmp);
                 echo "<p><a href=\"admin.php\">Загрузка теста</a></p>";
                 echo "<p><a href=\"list.php\">Выбор теста</a></p>";
@@ -48,7 +49,7 @@ if (isset($_FILES['test']['name']) && !empty($_FILES['test']['name']))
         }
         $file_name = $_FILES['test']['name'];
         $tmp_file = $_FILES['test']['tmp_name'];
-        $upload_dir = 'tests/';
+        $upload_dir = 'uploads/';
         if (($_FILES['test']['error'] == UPLOAD_ERR_OK) &&
             move_uploaded_file($tmp_file, $upload_dir . $file_name))
         {
@@ -67,20 +68,22 @@ if (isset($_FILES['test']['name']) && !empty($_FILES['test']['name']))
 }
 ?>
 
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Загрузка теста</title>
+    <title>Форма для тестов</title>
 </head>
 <body>
 <form method="POST" enctype="multipart/form-data">
     <?php if($file_send != true) {?>
-        <label for="test" style="margin-bottom: 15px; display: block; cursor: pointer;">Загрузить</label>
+    <label for="test" style="margin-bottom: 15px; display: block; cursor: pointer;">Загрузка файл</label>
     <?php } else {?>
-        <label for="test" style="margin-bottom: 15px; display: block; cursor: pointer;">Попробуйте еще</label>
+    <label for="test" style="margin-bottom: 15px; display: block; cursor: pointer;">Еще</label>
     <?php } ?>
-    <input type="file" name="test" id="test">
+    <input type="file" name="test" id="test"><br><br>
     <input type="submit" name="test" value="Отправить">
 </form>
 <p><a href="list.php">Выбор теста</a></p>
+<p><a href="admin.php">Загрузка теста</a></p>
 </body>
 </html>
